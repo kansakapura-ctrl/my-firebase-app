@@ -1,0 +1,224 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Represents a user's profile which is created when they sign up.",
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "The user's display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "photoURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL for the user's profile picture."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the user account was created."
+        }
+      },
+      "required": ["displayName", "email", "createdAt"]
+    },
+    "Feedback": {
+      "title": "User Feedback",
+      "description": "Represents feedback submitted by a user.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type of feedback (e.g., 'review', 'bug')."
+        },
+        "comment": {
+          "type": "string",
+          "description": "The detailed feedback content."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of when the feedback was submitted."
+        },
+        "uid": {
+          "type": "string",
+          "description": "The ID of the user who submitted the feedback."
+        }
+      },
+      "required": [
+        "type",
+        "comment",
+        "createdAt"
+      ]
+    },
+    "Agent": {
+      "title": "AI Agent",
+      "description": "Represents an AI automation agent created by a user.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the agent."
+        },
+        "description": {
+          "type": "string",
+          "description": "A short description of the agent's purpose."
+        },
+        "tasks": {
+          "type": "array",
+          "description": "A list of tasks or actions the agent performs.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "details": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the agent (e.g., 'active', 'inactive')."
+        },
+        "tasksCompleted": {
+          "type": "number",
+          "description": "The total number of tasks completed by the agent."
+        },
+        "lastRun": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of when the agent was last run."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of when the agent was created."
+        },
+        "uid": {
+          "type": "string",
+          "description": "The ID of the user who owns this agent."
+        },
+        "isPublic": {
+          "type": "boolean",
+          "description": "If true, this agent is listed in the public App Store."
+        },
+        "downloads": {
+          "type": "number",
+          "description": "How many times this agent has been downloaded from the App Store."
+        },
+        "avatar": {
+          "type": "string",
+          "description": "An identifier for the agent's avatar image."
+        },
+        "authorDisplayName": {
+          "type": "string",
+          "description": "The display name of the agent's original creator."
+        },
+        "authorPhotoURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL for the original creator's profile picture."
+        },
+        "originalAgentId": {
+          "type": "string",
+          "description": "If downloaded, the ID of the agent it was copied from."
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "createdAt",
+        "uid",
+        "avatar"
+      ]
+    },
+    "LogEntry": {
+      "title": "Agent Execution Log",
+      "description": "Represents a single log entry for an action performed by an agent.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The ID of the user who owns the agent."
+        },
+        "agentId": {
+          "type": "string",
+          "description": "The ID of the agent that performed the action."
+        },
+        "agentName": {
+          "type": "string",
+          "description": "The name of the agent."
+        },
+        "taskName": {
+          "type": "string",
+          "description": "The name of the task/action that was executed."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "failure"
+          ],
+          "description": "The result of the action execution."
+        },
+        "details": {
+          "type": "string",
+          "description": "Details about the execution, like an error message or success confirmation."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of when the action was executed."
+        }
+      },
+      "required": [
+        "uid",
+        "agentId",
+        "agentName",
+        "taskName",
+        "status",
+        "details",
+        "timestamp"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "google.com"
+    ]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/backend/entities/UserProfile"
+      },
+      "description": "Stores public user profile information."
+    },
+    "/feedback/{feedbackId}": {
+      "schema": {
+        "$ref": "#/backend/entities/Feedback"
+      },
+      "description": "Stores user feedback and comments."
+    },
+    "/agents/{agentId}": {
+      "schema": {
+        "$ref": "#/backend/entities/Agent"
+      },
+      "description": "Stores AI agent configurations created by users."
+    },
+    "/logs/{logId}": {
+      "schema": {
+        "$ref": "#/backend/entities/LogEntry"
+      },
+      "description": "Stores execution logs for all agent actions."
+    }
+  }
+}
