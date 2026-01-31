@@ -22,6 +22,12 @@ This project is built with a modern, robust, and scalable tech stack:
 - **Backend & Database:** [Firebase](https://firebase.google.com/) (Firestore & Authentication)
 - **Generative AI:** Google's Gemini models, orchestrated with [Genkit](https://firebase.google.com/docs/genkit).
 
+## 💬 Community
+
+Join the conversation and connect with other developers! This is a great place to ask questions, share your custom agents, and get help.
+
+- **[Join our GitHub Discussions](https://github.com/kansakapura-ctrl/my-firebase-app/discussions)**
+
 ## 🏃‍♀️ Running the Application
 
 This project is ready to run in a cloud-based development environment like Firebase Studio.
